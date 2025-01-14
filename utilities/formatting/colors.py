@@ -18,6 +18,10 @@ class Color:
     def red(self) -> str:
         return self._color(Fore.RED)
 
+    @property
+    def yellow(self) -> str:
+        return self._color(Fore.YELLOW)
+
     def __repr__(self):
         return "Color({})".format(self._text)
 
