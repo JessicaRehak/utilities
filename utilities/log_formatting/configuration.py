@@ -71,6 +71,5 @@ def configure_logging(caller_name: str = '',
     if full_log_to_file:
         _add_handler('log_to_file', ROTATING_FILE_HANDLER)
 
-    print(logger_configuration)
     LOGGING_CONFIG['loggers'] = logger_configuration
     dictConfig(LOGGING_CONFIG)
