@@ -17,4 +17,13 @@ class Color:
     @property
     def red(self) -> str:
         return self._color(Fore.RED)
-    
+
+    def __repr__(self):
+        return "Color({})".format(self._text)
+
+    def __str__(self):
+        return self._text
+
+class Header(Color):
+    def __init__(self, text: str, width: int = 120, symbol: str = "=") -> None:
+        super().__init__('{text:{symbol}<{width}}'.format(text=text, symbol=symbol, width=width))    
