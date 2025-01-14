@@ -38,7 +38,7 @@ LOGGING_CONFIG = {
     'disable_existing_loggers': True,
     'formatters': {
         'standard': {
-            'format': '%(asctime)s [%(levelname)s] %(message)s',
+            '()': 'utilities.log_formatting.simple_formatter.SimpleConsoleFormatter',
         },
         'verbose': {
             '()': 'utilities.log_formatting.verbose_formatter.VerboseFormatter'

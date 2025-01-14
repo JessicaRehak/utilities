@@ -2,9 +2,11 @@ import logging
 
 from colorama import Fore
 
-class VerboseConsoleFormatter(logging.Formatter):
-    """A verbose formatter that includes ASCII escape characters for coloring."""
-    _issue_format: str = '%(asctime)s {name} {{color}}{level:^10} %(message)s{{reset}}'.format( name='%(name)-20s', level='%(levelname)-10s')
+class SimpleConsoleFormatter(logging.Formatter):
+    """A simple formatter that includes ASCII escape characters for coloring."""
+    _issue_format: str = '%(asctime)s {{color}}{level:^10} %(message)s{{reset}}'.format(
+        level='%(levelname)-10s'
+    )
     default_time_format = '%H:%M:%S'
     default_msec_format = '%s.%03d'
 
@@ -25,10 +27,3 @@ class VerboseConsoleFormatter(logging.Formatter):
         self._style._fmt = self._issue_format.format(color=self._get_color(record.levelno), reset=self._get_reset())
         return logging.Formatter.format(self, record)
     
-
-class VerboseFormatter(VerboseConsoleFormatter):
-    def _get_color(self, logging_level):
-        return ''
-
-    def _get_reset(self):
-        return ''
