@@ -30,4 +30,5 @@ class Color:
 
 class Header(Color):
     def __init__(self, text: str, width: int = 120, symbol: str = "=") -> None:
-        super().__init__('{text:{symbol}<{width}}'.format(text=text, symbol=symbol, width=width))    
+        super().__init__('{text:{symbol}^{width}}'.format(text=text.center(len(text) + 2), 
+                                                          symbol=symbol, width=width))    
