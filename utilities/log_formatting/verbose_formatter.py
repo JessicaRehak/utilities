@@ -3,7 +3,7 @@ from typing import Dict
 
 from colorama import Fore, Style
 
-class VerboseFormatter(logging.Formatter):
+class VerboseConsoleFormatter(logging.Formatter):
     _issue_format: str = '%(asctime)s {name} {{color}}{level:^10} {reset}%(message)s'.format( name='%(name)-10s', level='%(levelname)-7s', reset=Style.RESET_ALL,)
     _formats: Dict[int, str] = {logging.ERROR: _issue_format.format(color=Fore.RED), 
                                 logging.WARNING: _issue_format.format(color=Fore.YELLOW), 
@@ -17,6 +17,6 @@ class VerboseFormatter(logging.Formatter):
         super().__init__()
         
     def format(self, record) -> str:
-        self._style._fmt = VerboseFormatter._formats[record.levelno]
+        self._style._fmt = VerboseConsoleFormatter._formats[record.levelno]
         return logging.Formatter.format(self, record)
     
