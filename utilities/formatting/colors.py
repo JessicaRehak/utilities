@@ -7,7 +7,7 @@ class Color:
     def __init__(self, text: str) -> None:
         self._text = text
         
-    def _color(self, color) -> str: 
+    def _color(self, color: str) -> str: 
         return "{}{}{}".format(color, self._text, Style.RESET_ALL)
     
     @property
