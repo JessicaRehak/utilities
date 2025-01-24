@@ -35,7 +35,7 @@ ERROR_FILE_HANDLER = {
 
 LOGGING_CONFIG = {
     'version': 1,
-    'disable_existing_loggers': True,
+    'disable_existing_loggers': False,
     'formatters': {
         'standard': {
             '()': 'utilities.log_formatting.simple_formatter.SimpleConsoleFormatter',
@@ -55,7 +55,7 @@ def configure_logging(caller_name: str = '',
                       debug_console: bool = False,
                       error_log_to_file: bool = True,
                       full_log_to_file: bool = False) -> None:
-    logger_configuration = {caller_name: {'propagate': False, 'level': 'NOTSET', 'handlers':[]}}
+    logger_configuration = {caller_name: {'propagate': True, 'level': 'NOTSET', 'handlers':[]}}
 
     def _add_handler(handler_name: str, handler: Dict):
         logger_configuration[caller_name]['handlers'].append(handler_name)
