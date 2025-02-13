@@ -4,6 +4,25 @@ import os
 
 _log = getLogger(__name__)
 
+def check_exists(path: Path, name: str = 'File') -> Path:
+    """Check existance of a path and return it. The return is so that it can be used iomatically as:
+    
+    my_path = check_exists(Path('path/to/check'))
+
+    :param path: path to check
+    :type path: Path
+    :param name: name of the file, only for loggin, defaults to 'File'
+    :type name: str, optional
+    :return: path that has been existance checked
+    :rtype: Path
+    """
+    path = path.resolve()
+    if not path.exists():
+        _log.error("{} not found at {}, path does not exist".format(name, path))
+        raise(FileNotFoundError)
+    _log.debug("{} found at {}".format(name, path))
+    return path
+
 def move_to_directory(input_path: Path, output_directory: Path) -> None:
     """Move a specified path to a directory. The name after moving will be the same as in the origin.
 
