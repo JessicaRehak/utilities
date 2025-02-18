@@ -37,15 +37,19 @@ def run_command(args: List[str | Any], cwd: Path, *, check_return_code: bool = T
     _log.debug('Running command {} at {}'.format(' '.join(args), cwd))
     if input_file is not None:
         _log.debug('With input file: {}'.format(input_file))
-    with open(input_file) as infile:
-        with subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=cwd,
-                            text=True, encoding='utf-8', shell=run_in_shell, 
-                            stdin=infile) as proc:
-            for line in proc.stdout:
-                if print_output_to_debug:
-                    _log.debug(line.rstrip('\n'))
+        infile = open(input_file)
+    else:
+        infile = None
+    with subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=cwd,
+                        text=True, encoding='utf-8', shell=run_in_shell, 
+                        stdin=infile) as proc:
+        for line in proc.stdout:
+            if print_output_to_debug:
+                _log.debug(line.rstrip('\n'))
         return_code = proc.wait()
     _log.debug('Process finished with code {}'.format(return_code))
+    if input_file is not None:
+        infile.close()
     if check_return_code and return_code != 0:
         try:
             error = proc.stderr.decode('utf-8')
