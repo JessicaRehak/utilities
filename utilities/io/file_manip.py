@@ -38,7 +38,7 @@ def move_to_directory(input_path: Path, output_directory: Path) -> None:
         _log.error('Output directory {} does not exist'.format(output_directory))
     os.rename(input_path, output_directory / input_path.name)
 
-def link(input_path: Path, output_path: Path) -> None:
+def link(input_path: Path, output_path: Path, *, overwrite: bool = False) -> None:
     """Link a path to an output path. Will return without linking if a correct symlink already exists.
 
     :param input_path: path to link from.
@@ -58,9 +58,12 @@ def link(input_path: Path, output_path: Path) -> None:
             if output_path.readlink() == input_path:
                 _log.debug('Correct symlink already exists, skipping.')
                 return
+            elif overwrite:
+                _log.warning('Symlink already exists to a different file, overwriting')
+                os.unlink(output_path)
             else:
                 _log.error('Symlink already exists to a different file, please delete or resolve.')
-            raise FileExistsError
+                raise FileExistsError
         else:
             _log.error(f'File already exists at {output_path}')
     os.symlink(input_path, output_path)
